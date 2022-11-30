@@ -25,7 +25,7 @@ public class GameCanvas extends JPanel {
 
         mainWindow.onDrawFrame(this, g, deltaTime);
         try {
-            Thread.sleep(16);
+            Thread.sleep(17);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

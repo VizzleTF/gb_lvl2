@@ -78,14 +78,14 @@ public class MainWindow extends JFrame {
         render(gameCanvas, g);
     }
 
+    Background back = new Background();
+
     private void update(GameCanvas gameCanvas, float deltaTime) {
         for (int i = 0; i < countBalls; i++) {
             sprites[i].update(gameCanvas, deltaTime);
         }
+        back.update(deltaTime);
     }
-
-
-    Background back = new Background();
 
     private void render(GameCanvas gameCanvas, Graphics g) {
         back.render(gameCanvas, g);

@@ -8,8 +8,8 @@ public class Background extends Sprite{
     private static Random rnd = new Random();
 
     public Color color;
-    private static final int freq = 60;
-    private static int i = 0;
+    private static final float freq = 1f;
+    private static float i = 0f;
 
     private int x;
     private int y;
@@ -21,12 +21,15 @@ public class Background extends Sprite{
         y = WINDOW_HEIGHT;
     }
 
-    void render(GameCanvas gameCanvas, Graphics g) {
-        i++;
+    void update(float deltaTime) {
+        i += deltaTime;
+        System.out.println(i);
         if (i > freq) {
             color = new Color(rnd.nextInt());
             i = 0;
         }
+    }
+    void render(GameCanvas gameCanvas, Graphics g) {
         g.setColor(color);
         g.fillRect(0, 0, x, y);
     }
