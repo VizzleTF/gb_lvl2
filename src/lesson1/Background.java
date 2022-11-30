@@ -23,7 +23,6 @@ public class Background extends Sprite{
 
     void update(float deltaTime) {
         i += deltaTime;
-        System.out.println(i);
         if (i > freq) {
             color = new Color(rnd.nextInt());
             i = 0;
