@@ -2,12 +2,15 @@ package lesson1;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainWindow extends JFrame {
     public static final int POS_X = 600;
     public static final int POS_Y = 200;
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
+    private static int countBalls = 10;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -28,9 +31,41 @@ public class MainWindow extends JFrame {
         add(gameCanvas);
         initGame();
         setVisible(true);
+        {
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        increaseBalls(new Ball());
+                    } else if (e.getButton() == MouseEvent.BUTTON3) {
+                        decreaseBalls();
+                    }
+                }
+            });
+        }
     }
 
-    Sprite[] sprites = new Sprite[10];
+    void increaseBalls(Ball ball) {
+        countBalls += 1;
+        if (countBalls > sprites.length) {
+            Sprite[] temp = new Sprite[sprites.length * 2];
+            System.arraycopy(sprites, 0, temp, 0, sprites.length);
+            sprites = temp;
+        }
+        sprites[countBalls - 1] = ball;
+    }
+
+    void decreaseBalls() {
+        countBalls -= 1;
+        if (countBalls < sprites.length / 3 && countBalls > 0) {
+            Sprite[] temp = new Sprite[sprites.length / 2];
+            System.arraycopy(sprites, 0, temp, 0, sprites.length / 2);
+            sprites = temp;
+        }
+        if (countBalls < 0) countBalls = 0;
+    }
+
+    Sprite[] sprites = new Sprite[countBalls];
 
     private void initGame() {
         for (int i = 0; i < sprites.length; i++) {
@@ -44,15 +79,22 @@ public class MainWindow extends JFrame {
     }
 
     private void update(GameCanvas gameCanvas, float deltaTime) {
-        for (int i = 0; i < sprites.length; i++) {
+        for (int i = 0; i < countBalls; i++) {
             sprites[i].update(gameCanvas, deltaTime);
         }
     }
 
+
+    Background back = new Background();
+
     private void render(GameCanvas gameCanvas, Graphics g) {
-        for (int i = 0; i < sprites.length; i++) {
+        back.render(gameCanvas, g);
+        for (int i = 0; i < countBalls; i++) {
             sprites[i].render(gameCanvas, g);
         }
+
     }
+
+
 
 }

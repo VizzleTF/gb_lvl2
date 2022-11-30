@@ -18,6 +18,8 @@ public class Ball extends Sprite{
         vy = 150f + (float)(Math.random() * 200f);
     }
 
+
+
     @Override
     void update(GameCanvas gameCanvas, float deltaTime) {
         x += vx * deltaTime;
